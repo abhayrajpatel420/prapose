@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+
+                
+       <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,10 +54,10 @@
             position: relative;
         }
 
-        /* GIF Styling - Ab ye "Line" nahi banega */
+        /* GIF Styling */
         .gif-container {
             width: 100%;
-            height: 300px; /* Fixed height */
+            height: 300px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -68,7 +70,7 @@
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(255, 118, 117, 0.4);
             opacity: 0;
-            display: none; /* Hidden by default */
+            display: none;
             transition: opacity 1s ease;
         }
 
@@ -77,14 +79,14 @@
             opacity: 1;
         }
 
-        /* Broken Image Fix: Hide broken icon border */
+        /* Broken Image Fix */
         img:not([src]), img[src=""] {
             display: none; 
         }
 
         /* Text Styling */
         .text-area {
-            height: 100px; /* Space reserved for text */
+            height: 120px; /* Thoda space badhaya taaki 2 lines aa sakein */
             position: relative;
             width: 100%;
             display: flex;
@@ -93,7 +95,7 @@
         }
 
         .text-line {
-            font-size: 22px;
+            font-size: 20px; /* Font thoda adjust kiya taaki promises fit ho jayein */
             line-height: 1.6;
             opacity: 0;
             position: absolute;
@@ -171,7 +173,7 @@
 <body>
 
     <div class="background"></div>
-    
+
     <audio id="bgMusic" loop>
         <source src="JagGhoomeya_song.mp3" type="audio/mpeg">
     </audio>
@@ -184,7 +186,7 @@
         </div>
 
         <div id="content" style="display: none; width: 100%;">
-            
+
             <div class="gif-container">
                 <img id="img1" src="https://i.giphy.com/media/26BRv0ThflsHCqDrG/giphy.webp" class="gif-display">
                 <img id="img2" src="https://i.giphy.com/media/7SF5scGB2AFrgsXP63/giphy.webp" class="gif-display">
@@ -194,12 +196,16 @@
 
             <div class="text-area">
                 <div class="text-line" id="txt1">Hey... <br>Kuch kehna tha tumse...</div>
-                <div class="text-line" id="txt2">Jab hum mile the...<br>TO shayad kah nahi paya .</div>
+                <div class="text-line" id="txt2">Jab hum mile the...<br>To shayad kah nahi paya.</div>
                 <div class="text-line" id="txt3">Tum shayad jaanti nahi...<br>Pichhle saal se main ek ajeeb mode par aa gaya aur.. <span class="highlight">toot gaya hu</span>.</div>
                 <div class="text-line" id="txt4">Par tumse milne ke baad laga...<br>Ki us <span class="highlight">khali-pan</span> ko tum bhar sakti ho.</div>
                 <div class="text-line" id="txt5">Mujhe koi badi umeed nahi hai...<br>Na main tumhari <span class="highlight">freedom</span> lena chahta hu.</div>
                 <div class="text-line" id="txt6">Bas ek darr hai...<br>Ki ye sab sunkar tum <span class="highlight">Block</span> na kar do.</div>
                 <div class="text-line" id="txt7">Please, aaram se sochna.<br>Agar 'NAA' ho, tab bhi hum dost rahenge. Block mat karna.</div>
+                
+                <div class="text-line" id="txt_p1">Main hamesha aapki <span class="highlight">Respect</span> karunga.<br>Main hamesha tumhaara <span class="highlight">Khayal</span> rakhoonga.</div>
+                <div class="text-line" id="txt_p2">Tumhen kabhee nazarandaaz nahin karoonga.<br>Har sthiti mein hamesha <span class="highlight">Saath</span> rahoonga.</div>
+                
                 <div class="text-line" id="txt8">Aur agar 'HAA' hui...<br>To wada hai, main tumhare liye khud ko poora badal dunga. ❤️</div>
                 <div class="text-line" id="txt9">Sirf Tumhara Intezaar Rahega... 💌</div>
             </div>
@@ -222,21 +228,26 @@
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('content').style.display = 'block';
             document.getElementById('progressBarContainer').style.display = 'block';
-            
+
             // Start Hearts
             setInterval(createHeart, 300);
 
             // Timeline Sequence (Text ID, Image ID, Duration)
-            // Maine time thoda badha diya hai taki padhne me aasaani ho
+            // Added new promises in the timeline
             let timeline = [
-                { txt: 'txt1', img: 'img1', time: 4000 }, // Hey
-                { txt: 'txt2', img: 'img1', time: 5000 }, // Mile the
-                { txt: 'txt3', img: 'img2', time: 5000 }, // Broken (Sad gif)
-                { txt: 'txt4', img: 'img3', time: 5000 }, // Khali pan (Hand hold gif)
-                { txt: 'txt5', img: 'img3', time: 5000 }, // No demand
-                { txt: 'txt6', img: 'img2', time: 5000 }, // Fear (Sad gif)
-                { txt: 'txt7', img: 'img1', time: 6000 }, // Please wait
-                { txt: 'txt8', img: 'img4', time: 6000 }, // Promise (Happy gif)
+                { txt: 'txt1', img: 'img1', time: 4000 }, 
+                { txt: 'txt2', img: 'img1', time: 5000 }, 
+                { txt: 'txt3', img: 'img2', time: 5000 }, 
+                { txt: 'txt4', img: 'img3', time: 5000 }, 
+                { txt: 'txt5', img: 'img3', time: 5000 }, 
+                { txt: 'txt6', img: 'img2', time: 5000 }, 
+                { txt: 'txt7', img: 'img1', time: 6000 },
+                
+                // New Promises Slides
+                { txt: 'txt_p1', img: 'img3', time: 5000 }, // Respect & Khayal
+                { txt: 'txt_p2', img: 'img3', time: 5000 }, // Nazarandaaz & Saath
+                
+                { txt: 'txt8', img: 'img4', time: 6000 }, // Badal lunga
                 { txt: 'txt9', img: 'img4', time: 10000 } // Final
             ];
 
@@ -247,7 +258,7 @@
             if (index >= timeline.length) return;
 
             let item = timeline[index];
-            
+
             // Hide previous text
             if (index > 0) {
                 document.getElementById(timeline[index-1].txt).classList.remove('active');
@@ -258,7 +269,7 @@
 
             // Show current
             document.getElementById(item.txt).classList.add('active');
-            
+
             if (item.img) {
                 // Ensure all others are hidden first
                 document.querySelectorAll('.gif-display').forEach(img => img.classList.remove('show'));
@@ -290,3 +301,5 @@
     </script>
 </body>
 </html>
+
+          
