@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You... ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+        }
+        /* Animated Gradient Background */
+        
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(125deg, #2c3e50, #000000, #4a1425, #1a0b12);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            z-index: -2;
+        }
+        
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        /* Container styling */
+        
+        .stage {
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            z-index: 10;
+            position: relative;
+        }
+        /* Text Styling */
+        
+        .text-line {
+            font-size: 24px;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .text-line.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .highlight {
+            color: #ff7675;
+            font-weight: 600;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3em;
+        }
+        /* GIF Styling */
+        
+        .gif-display {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 118, 117, 0.4);
+            opacity: 0;
+            transition: opacity 1s ease;
+            display: none;
+            margin: 0 auto;
+        }
+        
+        .gif-display.show {
+            display: block;
+            opacity: 1;
+        }
+        /* Start Button */
+        
+        .start-btn {
+            background: #ff7675;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 118, 117, 0.6);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 118, 117, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(255, 118, 117, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 118, 117, 0);
+            }
+        }
+        /* Floating Hearts */
+        
+        .heart {
+            position: absolute;
+            color: #ff7675;
+            opacity: 0;
+            bottom: -10vh;
+            animation: floatUp linear forwards;
+            z-index: -1;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-120vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+        /* Progress Bar */
+        
+        .progress-container {
+            position: absolute;
+            bottom: 20px;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #ff7675;
+            width: 0%;
+            transition: width 0.5s linear;
+        }
+        /* Music Control (Hidden) */
+        
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background"></div>
+
+    <audio id="bgMusic" loop>
+        <source src="JagGhoomeya_song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="stage">
+        <div id="startScreen">
+            <h1 style="margin-bottom: 20px; font-family: 'Dancing Script';">Ek Paigam...</h1>
+            <p style="font-size: 12px; color: #ccc; margin-bottom: 20px;">(Headphones laga lena 🎧)</p>
+            <button class="start-btn" onclick="startShow()">Tap to Open ❤️</button>
+        </div>
+
+        <div id="content" style="display: none;">
+            <img id="img1" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExanR5aW56Y3l4aHlpY2xvM2k1Z3U0aWF5d2c2YjN1bmU5aW9pa250MyZlcD12MV9zdGlja2Vcn1yZXN1bHRzJmN0PXM/Z5SMZGKTLkwjDxxR6k/giphy.gif" class="gif-display">
+            <img id="img2" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3VzeXJ5aW1sNjFneHdtN2QzY3VwOGc2YjN1bmU5aW9pa250MyZlcD12MV9zdGlja2Vcn1yZXN1bHRzJmN0PXM/MVDPX3PQK76j2jX7IX/giphy.gif" class="gif-display">
+            <img id="img3" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHlpY2xvM2k1Z3U0aWF5d2c2YjN1bmU5aW9pa250M3I5bWJtYyZlcD12MV9zdGlja2Vcn1yZXN1bHRzJmN0PXM/U43iF6E0x2Rj6tC85A/giphy.gif" class="gif-display">
+
+            <div class="text-line" id="txt1">Hey... <br>Kuch kehna tha tumse...</div>
+            <div class="text-line" id="txt2">Jab hum mile the...<br>to tab shayd mai kah nahi paya ki tum pahli nazar me kitni pyari lagi.</div>
+            <div class="text-line" id="txt3">Tum shayad jaanti nahi...<br>Pichle dedh saal se main andar se mai ek ajeeb se mode par hu ki shayad abhi tak vo hadsa mere dimaag se nahi nikla.</div>
+            <div class="text-line" id="txt4">Par tumse milne ke baad laga...<br>Ki us <span class="highlight">khali-pan</span> ko tum bhar sakti ho.</div>
+            <div class="text-line" id="txt5">Mujhe koi badi umeed nahi hai...<br>Na main tumhari <span class="highlight">freedom</span> lena chahta hu.</div>
+            <div class="text-line" id="txt6">Bas ek darr hai...<br>Ki ye sab sunkar tum <span class="highlight">Block</span> na kar do.</div>
+            <div class="text-line" id="txt7">Please, aaram se sochna.<br>Agar 'NAA' ho, tab bhi hum dost rahenge. Block mat karna.</div>
+            <div class="text-line" id="txt8">Aur agar 'HAA' hui...<br>To wada hai, main tumhare liye khud ko poora badal dunga. ❤️</div>
+            <div class="text-line" id="txt9">Sirf Tumhara Intezaar Rahega... 💌</div>
+        </div>
+
+        <div class="progress-container" id="progressBarContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <script>
+        function startShow() {
+            // Play Music
+            var music = document.getElementById('bgMusic');
+            music.volume = 0.5; // Awaaz 50% rakhi hai taaki chubhe nahi
+            music.play().catch(error => {
+                console.log("Audio playback failed. User interaction needed.");
+            });
+
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            document.getElementById('progressBarContainer').style.display = 'block';
+
+            // Start Hearts
+            setInterval(createHeart, 300);
+
+            // Timeline Sequence
+            let timeline = [{
+                txt: 'txt1',
+                img: 'img1',
+                time: 3000
+            }, {
+                txt: 'txt2',
+                img: 'img1',
+                time: 5000
+            }, {
+                txt: 'txt3',
+                img: 'img2',
+                time: 5000
+            }, {
+                txt: 'txt4',
+                img: 'img2',
+                time: 5000
+            }, {
+                txt: 'txt5',
+                img: null,
+                time: 4000
+            }, {
+                txt: 'txt6',
+                img: null,
+                time: 4000
+            }, {
+                txt: 'txt7',
+                img: null,
+                time: 6000
+            }, {
+                txt: 'txt8',
+                img: 'img3',
+                time: 6000
+            }, {
+                txt: 'txt9',
+                img: 'img3',
+                time: 10000
+            }];
+
+            runSequence(timeline, 0);
+        }
+
+        function runSequence(timeline, index) {
+            if (index >= timeline.length) return;
+
+            let item = timeline[index];
+
+            if (index > 0) {
+                document.getElementById(timeline[index - 1].txt).classList.remove('active');
+                if (timeline[index - 1].img && timeline[index - 1].img !== item.img) {
+                    document.getElementById(timeline[index - 1].img).classList.remove('show');
+                }
+            }
+
+            document.getElementById(item.txt).classList.add('active');
+
+            if (item.img) {
+                document.querySelectorAll('.gif-display').forEach(img => img.classList.remove('show'));
+                document.getElementById(item.img).classList.add('show');
+            }
+
+            let progress = ((index + 1) / timeline.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            setTimeout(() => {
+                runSequence(timeline, index + 1);
+            }, item.time);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+            heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 10000);
+        }
+    </script>
+</body>
+
+</html>
